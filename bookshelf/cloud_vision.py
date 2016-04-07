@@ -75,37 +75,8 @@ def identify_image_attributes(gcs_uri, max_results=4):
     return response
 # [END identify_landmark]
 
-
-
-
+# [START identify_image_attributes_gcs]
 def identify_image_attributes_gcs(gcs_file, gcs_bucket, max_results=4):
     gcs_uri = "gs://" + str(gcs_bucket) + "/" + str(gcs_file)
     return identify_image_attributes(gcs_uri, max_results)
-
-
-# # [START main]
-# def main(gcs_uri):
-#     if gcs_uri[:5] != 'gs://':
-#         raise Exception('Image uri must be of the form gs://bucket/object')
-#     #annotations = identify_landmark(gcs_uri)
-#     annotations = identify_image_attributes(gcs_uri)
-#     print annotations
-#     # if not annotations:
-#     #     print('No landmark identified')
-#     # else:
-#     #     print(annotations + '\n'.join(a['description'] for a in annotations))
-# # [END main]
-
-
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser(
-#         description='Identifies the landmark in the given image.')
-#     parser.add_argument(
-#         'gcs_uri', help=('The Google Cloud Storage uri to the image to identify'
-#                          ', of the form: gs://bucket_name/object_name.jpg'))
-#     args = parser.parse_args()
-
-#     main(args.gcs_uri)
-
-
-#src="https://storage.googleapis.com/cloud-vision/demo-peacock1-2016-04-04-174206.jpg"
+# [END identify_image_attributes_gcs]
