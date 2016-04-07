@@ -6,6 +6,7 @@ import crud_api
 
 parser = reqparse.RequestParser()
 parser.add_argument('task')
+parser.add_argument('maxResults',  type=int)
 # From file uploads
 parser.add_argument('picture', type=werkzeug.datastructures.FileStorage, location='files')
 
@@ -19,8 +20,11 @@ class UploadFile(Resource):
     def post(self):
         args = parser.parse_args()
         file = args['picture']
+        print args
+        max_results = args['maxResults']
         if file:
-            response = crud_api.identify_image_attributes(file)
+            print ("**** Got max_results 1 %s " %max_results)
+            response = crud_api.identify_image_attributes(file, max_results)
         else:
             abort(404, message="No file ('picture' attribute) attached with the request")
         return response, 201

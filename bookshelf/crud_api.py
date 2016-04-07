@@ -8,13 +8,14 @@ response = { "imageUrl" : ""}
 
 #[START identify_image_attributes]
 
-def identify_image_attributes(files):
+def identify_image_attributes(files, max_results=4):
+    print ("**** Got max_results 2 %s " %max_results)
     image_url = upload_image_file(files)
     response['imageUrl'] = image_url
     _url = image_url.split( "/")
     gcfile =  _url[len(_url) - 1]
     gcbucket = _url[len(_url) - 2]
-    cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket)
+    cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket, max_results)
     cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
     response['cv_response'] = str(cv_response_pretty)
     return response

@@ -45,6 +45,7 @@ def identify_image_attributes(gcs_uri, max_results=4):
     Returns:
         An array of dicts with information about the landmarks in the picture.
     """
+    print ("**** Got max_results %s " %max_results)
     batch_request = [{
         'image': {
             'source': {
