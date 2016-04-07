@@ -64,13 +64,11 @@ class UploadFile(Resource):
 
     def post(self):
         args = parser.parse_args()
-        print args
-        print "**ARGS"
-        todo_id = int(max(TODOS.keys()).lstrip('todo')) + 1
-        todo_id = 'todo%i' % todo_id
-        TODOS[todo_id] = {'task': args['task']}
         file = args['picture']
-        response = crud_api.identify_image_attributes(file)
+        if file:
+            response = crud_api.identify_image_attributes(file)
+        else:
+            response = {"error" : "No file attached with the request", 'task': args['task']}
         return response, 201
 
 ##
