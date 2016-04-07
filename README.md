@@ -23,5 +23,7 @@ If you are a Windows user, the following command is for you:
  <code>(venv) $pip install -r requirements.txt</code>
 
 
+ <code> export GOOGLE_APPLICATION_CREDENTIAL=</path/to/file> </code>
+<code>python main.py</code>
 
 
