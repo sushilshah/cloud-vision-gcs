@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
+import logging, cv_api
 
 from flask import current_app, Flask, redirect, url_for
 
@@ -40,10 +40,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
     from .crud import crud
     app.register_blueprint(crud, url_prefix='/books')
 
-    logging.info("************************")
-    logging.info(config)
-    logging.info("************************")
-
+    cv_api.register_apis(app)
     # Add a default root route.
     @app.route("/")
     def index():

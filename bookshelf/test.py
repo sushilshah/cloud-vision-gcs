@@ -44,9 +44,26 @@ def upload_file(file_stream, filename, content_type):
 #     )
 #image_url = crud.upload_image_file()
 
-uri = "https://storage.googleapis.com/cloud-vision/demo-peacock1-2016-04-04-174206.jpg"
-_url = uri.split( "/")
-print len(_url)
-gcfile =  _url[len(_url) - 1]
-gcbucket = _url[len(_url) - 2]
-print (gcbucket + " " + gcfile)
+# uri = "https://storage.googleapis.com/cloud-vision/demo-peacock1-2016-04-04-174206.jpg"
+# _url = uri.split( "/")
+# print len(_url)
+# gcfile =  _url[len(_url) - 1]
+# gcbucket = _url[len(_url) - 2]
+# print (gcbucket + " " + gcfile)
+
+from flask import Flask, url_for
+app = Flask(__name__)
+@app.route('/')
+def index(): pass
+
+@app.route('/login')
+def login(): pass
+
+@app.route('/user/<username>')
+def profile(username): pass
+
+with app.test_request_context():
+ print url_for('index')
+ print url_for('login')
+ print url_for('login', next='/')
+ print url_for('.view', username='John Doe')

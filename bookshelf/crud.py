@@ -15,7 +15,7 @@
 from bookshelf import get_model, storage
 from flask import Blueprint, current_app, redirect, render_template, request, \
     url_for
-import cloud_vision
+import cloud_vision, json
 
 crud = Blueprint('crud', __name__)
 
@@ -58,7 +58,10 @@ def list():
 @crud.route('/<id>')
 def view(id):
     book = get_model().read(id)
-    return render_template("view.html", book=book)
+    current_app.logger.info("view call with book type  %s " %str(type(book)))
+    current_app.logger.info("view call with book type  %s " %book)
+    _book = dict(book)
+    return render_template("view.html", book=_book)
 
 
 @crud.route('/add', methods=['GET', 'POST'])
@@ -72,26 +75,39 @@ def add():
         # [END image_url]
         current_app.logger.info("############Image url : %s" %image_url)
 
-        uri = image_url
-        _url = uri.split( "/")
-        print len(_url)
+        _url = image_url.split( "/")
         gcfile =  _url[len(_url) - 1]
         gcbucket = _url[len(_url) - 2]
-        print (gcbucket + " " + gcfile)
+        
         
         current_app.logger.info("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
         cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket)
         current_app.logger.info("############end cloud vision gcfile :   %s: " %cv_response )
-
+        cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
         # [START image_url2]
         if image_url:
             data['imageUrl'] = image_url
+            #data['cv_response'] ="cv_response FOOBAR"
         # [END image_url2]
+        if cv_response:
+            data['cv_response'] = str(cv_response_pretty)
 
         book = get_model().create(data)
-        if cv_response:
-            book['cv_response'] = cv_response
+        
+        #_book = dict(book)
+
+        #current_app.logger.info("############BOOK OBJECT TYPE : " +  str(_book))
+        #_book['cv_response'] ="cv_response FOOBAR"
+        
+        # if cv_response:
+        #     book['cv_response'] = cv_response
+        # book['cv_response1'] = "cv_response FOOBAR"
+        #current_app.logger.info("############BOOK OBJECT :   %s: " %_book )
+
+        #return redirect(url_for('.view', id=book['id']))
+
         return redirect(url_for('.view', id=book['id']))
+        
 
     return render_template("form.html", action="Add", book={})
 
@@ -119,3 +135,56 @@ def edit(id):
 def delete(id):
     get_model().delete(id)
     return redirect(url_for('.list'))
+
+
+response = {
+            'upload file example': {'task': 'build an API'},
+            'todo2': {'task': '?????'},
+            'todo3': {'task': 'profit!'},
+        }
+
+def foo():
+    return "FOO"
+def identify_image_attributes(files):
+    current_app.logger.info("############files : %s" %files)
+    return response
+    # if request.method == 'POST':
+    #     data = request.form.to_dict(flat=True)
+
+    #     # If an image was uploaded, update the data to point to the new image.
+    #     # [START image_url]
+    #     image_url = upload_image_file(request.files.get('image'))
+    #     # [END image_url]
+    #     current_app.logger.info("############Image url : %s" %image_url)
+
+    #     _url = image_url.split( "/")
+    #     gcfile =  _url[len(_url) - 1]
+    #     gcbucket = _url[len(_url) - 2]
+        
+        
+    #     current_app.logger.info("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
+    #     cv_response = cloud_vision.identify_image_attributes_gcsifilesle, gcbucket)
+    #     current_app.logger.info("############end cloud vision gcfile :   %s: " %cv_response )
+    #     cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
+    #     # [START image_url2]
+    #     if image_url:
+    #         data['imageUrl'] = image_url
+    #         #data['cv_response'] ="cv_response FOOBAR"
+    #     # [END image_url2]
+    #     if cv_response:
+    #         data['cv_response'] = str(cv_response_pretty)
+
+    #     book = get_model().create(data)
+        
+        #_book = dict(book)
+
+        #current_app.logger.info("############BOOK OBJECT TYPE : " +  str(_book))
+        #_book['cv_response'] ="cv_response FOOBAR"
+        
+        # if cv_response:
+        #     book['cv_response'] = cv_response
+        # book['cv_response1'] = "cv_response FOOBAR"
+        #current_app.logger.info("############BOOK OBJECT :   %s: " %_book )
+
+        #return redirect(url_for('.view', id=book['id']))
+        
