@@ -26,7 +26,6 @@ def upload_image_file(file):
     Upload the user-uploaded file to Google Cloud Storage and retrieve its
     publicly-accessible URL.
     """
-    print("********************upload file name %s" %file)
     if not file:
         return None
 

@@ -46,7 +46,7 @@ def identify_image_attributes(gcs_uri, max_results=4):
     Returns:
         An array of dicts with information about the landmarks in the picture.
     """
-    print ("**** Got max_results %s " %max_results)
+
     batch_request = [{
         'image': {
             'source': {
@@ -88,10 +88,7 @@ def get_attributes_info(response_json, attribute_identifier, get_kg=False):
     attribute = current_app.config['ATTRIBUTE_' + attribute_identifier]
     
     if attribute == 'bird':
-        attribute = ""
         chirping_response = chirping.start_chirping(response_json, get_kg)
-        print "CV chirping_response"
-        print chirping_response
     else:
         raise ValueError(
             "No appropriate attribute found in the config file for the attribute: " + attribute_identifier +" . "

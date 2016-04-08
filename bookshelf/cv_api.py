@@ -20,10 +20,8 @@ class UploadFile(Resource):
     def post(self):
         args = parser.parse_args()
         file = args['picture']
-        print args
         max_results = args['maxResults']
         if file:
-            print ("**** Got max_results 1 %s " %max_results)
             response = crud_api.identify_image_attributes(file, max_results)
         else:
             abort(404, message="No file ('picture' attribute) attached with the request")

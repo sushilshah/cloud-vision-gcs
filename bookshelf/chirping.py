@@ -72,6 +72,6 @@ def validate_safe_search_annotation(input):
 def validate_label_annotations(input):
     for label_annotation in input:
         if label_annotation['description'] == 'bird':
-            print "Yay! Bird found."
+            print "HAPPINESS: Yay! Bird found."
             return True
     return False

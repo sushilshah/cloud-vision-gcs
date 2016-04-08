@@ -119,21 +119,16 @@ def getTargetIds(jsonData):
                     #bird_mid = get_bird(_results[attribute])
                     if search_bird_results:
                         chirping_bird = search_bird_results[0] #As of now pick at index 0
-                        print chirping_bird
-                        print 'chirping_bird'
                         #knowledge search 
                     ##Add to response bird info
 
 #expects input format as [{u'score': u'0.98018545', u'mid': u'/m/0h29c', u'description': u'peafowl'}, {u'score': u'0.94620532', u'mid': u'/m/015p6', u'description': u'bird'}]
 bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl']
 def search_bird(input):
-    print 'search bird'
     response = []
     i = 0
     for label_annotations in input:
         if label_annotations['description'] in bird_name_list:
-            print label_annotations['description']
-            print 'search end'
             response.append(label_annotations)
             i=+1
     return response
@@ -149,7 +144,6 @@ def validate_safe_search_annotation(input):
     for attribute in input:
         if attribute == 'adult':
             if input[attribute] in ADULT_PASS_CRITERIA:
-                print "ADUILT"
                 pass_flag = True 
                 #false
             if input[attribute] in VIOLENCE_PASS_CRITERIA and pass_flag:
@@ -171,18 +165,6 @@ def validate_label_annotations(input):
     return False
 
 
-    # if 'from' not in data:
-    #     raise ValueError("No target in given data")
-    # if 'data' not in data['to']:
-    #     raise ValueError("No data for target")
-
-    # for dest in data['to']['data']:
-    #     if 'id' not in dest:
-    #         continue
-    #     targetId = dest['id']
-    #     print("to_id:", targetId)
-
-#from chirping import Chirping
 import chirping
 chirping.start_chirping(jsonData)
 
