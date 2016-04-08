@@ -4,9 +4,7 @@ import cloud_vision, json
 
 response = { "imageUrl" : ""}
 
-
 #[START identify_image_attributes]
-
 def identify_image_attributes(files, max_results=4):
     image_url = upload_image_file(files)
     response['imageUrl'] = image_url
@@ -16,16 +14,10 @@ def identify_image_attributes(files, max_results=4):
     cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket, max_results)
     if cv_response:
         response['cv_response'] = cv_response
-    #cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
-    print"Start attrib_info"
-    attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD")
-    print attrib_info
+
+    attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD", True)
     if attrib_info:
         response["birdInfo"] = attrib_info
-    
-    print"Start attrib_info"
-    print "FULL CV RESPONSE"
-    print response
     return response
 #[END identify_image_attributes]
 
