@@ -46,7 +46,6 @@ def identify_image_attributes(gcs_uri, max_results=4):
     Returns:
         An array of dicts with information about the landmarks in the picture.
     """
-
     batch_request = [{
         'image': {
             'source': {
@@ -54,10 +53,6 @@ def identify_image_attributes(gcs_uri, max_results=4):
             }
         },
         'features': [{
-            'type': 'LANDMARK_DETECTION',
-            'maxResults': max_results,
-            },
-            {
             "type": "LABEL_DETECTION",
             'maxResults': max_results
             },
@@ -68,11 +63,12 @@ def identify_image_attributes(gcs_uri, max_results=4):
     }]
 
     service = get_vision_service()
+    current_app.logger.info("Start google vision service")
     request = service.images().annotate(body={
         'requests': batch_request,
         })
     response = request.execute()
-
+    current_app.logger.info("End google vision service")
     #return response['responses'][0].get('landmarkAnnotations', None)
     return response
 # [END identify_landmark]

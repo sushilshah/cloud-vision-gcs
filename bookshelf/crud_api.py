@@ -14,7 +14,7 @@ def identify_image_attributes(files, max_results=4):
     cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket, max_results)
     if cv_response:
         response['cv_response'] = cv_response
-        attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD", True)
+        attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD")
     if attrib_info:
         response["birdInfo"] = attrib_info
     return response

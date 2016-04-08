@@ -24,7 +24,7 @@ def init_app(app):
 
 
 def get_client():
-    current_app.logger.info("inside model_datastore get Client")
+    current_app.logger.debug("inside model_datastore get Client")
     return datastore.Client(current_app.config['PROJECT_ID'])
 
 
@@ -48,12 +48,12 @@ def from_datastore(entity):
 
 
 def list(limit=10, cursor=None):
-    current_app.logger.info("before get Client #################################")
     ds = get_client()
     query = ds.query(kind='Book', order=['title'])
+    current_app.logger.info("Before FETCH")
     it = query.fetch(limit=limit, start_cursor=cursor)
     entities, more_results, cursor = it.next_page()
-    current_app.logger.info("#################################after get Client #################################")
+    current_app.logger.info("After FETCH")
     entities = builtin_list(map(from_datastore, entities))
     return entities, cursor if len(entities) == limit else None
 

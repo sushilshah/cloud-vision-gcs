@@ -40,10 +40,10 @@
     <!-- <h5 class="book-author">By {{book.author|default('Unknown', True)}}</h5> -->
     <h5 class="book-author">By {{book.cv_response|default('Unknown', True)}}
     
-    <p class="book-description">{{book}}</p>
+    <p class="book-description">{{book.cv_response}}</p>
     <div>
       CV response : 
-      <small>{{book.cv_response}}</small>
+      <small>{{book}}</small>
     </div>
   </div>
 

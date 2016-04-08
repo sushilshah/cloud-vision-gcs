@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-import datetime, logging
+import datetime
 
 from flask import current_app
 from gcloud import storage
@@ -68,6 +68,5 @@ def upload_file(file_stream, filename, content_type):
     url = blob.public_url
     if isinstance(url, six.binary_type):
         url = url.decode('utf-8')
-
     return url
 # [END upload_file]
