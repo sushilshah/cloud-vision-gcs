@@ -60,3 +60,6 @@ MONGO_URI = \
 CLOUD_STORAGE_BUCKET = 'cloud-vision'
 MAX_CONTENT_LENGTH = 8 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+#Identifier for Attribute keywords
+ATTRIBUTE_BIRD = 'bird'

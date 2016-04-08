@@ -21,7 +21,8 @@ import argparse
 from googleapiclient import discovery
 import httplib2
 from oauth2client.client import GoogleCredentials
-
+from flask import current_app
+import chirping
 
 # [START get_vision_service]
 # The url template to retrieve the discovery document for trusted testers.
@@ -81,3 +82,19 @@ def identify_image_attributes_gcs(gcs_file, gcs_bucket, max_results=4):
     gcs_uri = "gs://" + str(gcs_bucket) + "/" + str(gcs_file)
     return identify_image_attributes(gcs_uri, max_results)
 # [END identify_image_attributes_gcs]
+
+# [START get_attributes_info]
+def get_attributes_info(response_json, attribute_identifier, get_kg=False):
+    attribute = current_app.config['ATTRIBUTE_' + attribute_identifier]
+    
+    if attribute == 'bird':
+        attribute = ""
+        chirping_response = chirping.start_chirping(response_json, get_kg)
+        print "CV chirping_response"
+        print chirping_response
+    else:
+        raise ValueError(
+            "No appropriate attribute found in the config file for the attribute: " + attribute_identifier +" . "
+            "Please configure the values in config file.")
+    return chirping_response
+# [END get_attributes_info]
