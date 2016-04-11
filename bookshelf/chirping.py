@@ -36,7 +36,7 @@ def start_chirping(data, get_kg=False):
 
 
 #expects input format as [{u'score': u'0.98018545', u'mid': u'/m/0h29c', u'description': u'peafowl'}, {u'score': u'0.94620532', u'mid': u'/m/015p6', u'description': u'bird'}]
-bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl']
+bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl', 'parrot']
 def search_bird(input):
     response = []
     i = 0

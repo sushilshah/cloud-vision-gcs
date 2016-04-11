@@ -21,6 +21,7 @@ class UploadFile(Resource):
         args = parser.parse_args()
         file = args['picture']
         max_results = args['maxResults']
+        kGraph = args['maxResults']
         if file:
             response = crud_api.identify_image_attributes(file, max_results)
         else:
