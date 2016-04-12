@@ -69,7 +69,6 @@ def identify_image_attributes(gcs_uri, max_results=4):
         })
     response = request.execute()
     current_app.logger.info("End google vision service")
-    #return response['responses'][0].get('landmarkAnnotations', None)
     return response
 # [END identify_landmark]
 

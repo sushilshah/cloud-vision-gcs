@@ -18,30 +18,34 @@
 
 {% block content %}
 
-<h3>Books</h3>
+<h3>Birds</h3>
+<div class='row'>
 <a href="/books/add" class="btn btn-success btn-sm">
   <i class="glyphicon glyphicon-plus"></i>
-  Add book
+  Add bird
 </a>
+</div>
 
 {% for book in books %}
-<div class="media">
-  <a href="/books/{{book.id}}">
-    <div class="media-left">
-      {% if book.imageUrl %}
-        <img src="{{book.imageUrl}}">
-      {% else %}
-        <img src="http://placekitten.com/g/128/192">
-      {% endif %}
-    </div>
-    <div class="media-body">
-      <h4>{{book.title}}</h4>
-      <p>{{book.author}}</p>
-    </div>
-  </a>
-</div>
+    <div class="col-sm-6 col-md-4">
+      <a href="/books/{{book.id}}">
+        <div class="thumbnail">
+        {# [START book_image] #}
+        {% if book.imageUrl %}
+          <img src="{{book.imageUrl}}" alt="500x500" data-holder-rendered="true" data-src="holder.js/500x500/auto">
+        {% else %}
+          <img class="book-image" src="http://placekitten.com/g/128/192">
+        {% endif %}
+          <div class="caption">
+            <h3>{{book.title}}</h3>
+            <h4>{{book.author}}</h4>
+          </div>
+        </div>
+      </a>
+    
+    </div>  
 {% else %}
-<p>No books found</p>
+<p>No birds found</p>  
 {% endfor %}
 
 {% if next_page_token %}
@@ -53,3 +57,4 @@
 {% endif %}
 
 {% endblock %}
+

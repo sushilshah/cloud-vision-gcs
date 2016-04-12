@@ -43,7 +43,7 @@ def start_chirping(data, get_kg=False):
 
 
 #expects input format as [{u'score': u'0.98018545', u'mid': u'/m/0h29c', u'description': u'peafowl'}, {u'score': u'0.94620532', u'mid': u'/m/015p6', u'description': u'bird'}]
-bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl', 'parrot', "house sparrow"]
+bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl', 'parrot', "house sparrow", 'tinamou','ostrich','rhea','cassowarie','emu','kiwi','waterfowl','screamer','megapode','guineafowl','loon','penguin','albatrosse','grebe','flamingo','tropicbird','stork','heron','Hamerkop','Shoebill','Pelican','frigatebird','darter','secretarybird','osprey','bustard','mesite','seriema','kagu','sunbittern','flufftail','finfoot','trumpeter','crane','limpkin','buttonquail','sheathbill','oystercatcher','ibisbill','jacana','seedsnipe','sandpiper','skua','auk','sandgrouse','hoatzin','turaco','owl','frogmouth','oilbird','potoo','nightjar','treeswift','swift','hummingbird','mousebird','trogon','roller','kingfisher','todie','motmot','jacamar','puffbird','toucan','honeyguide']
 def search_bird(input):
     response = []
     i = 0

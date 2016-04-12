@@ -57,9 +57,9 @@ def list():
 @crud.route('/<id>')
 def view(id):
     book = get_model().read(id)
-    cv_response = json.loads(book['cv_response'])
-
-    if cv_response:
+    
+    if book['cv_response']:
+        cv_response = json.loads(book['cv_response'])
         attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD", True)
         book['birdInfo'] = attrib_info
 
@@ -78,18 +78,18 @@ def add():
         image_url = upload_image_file(request.files.get('image'))
         # [END image_url]
         
-        current_app.logger.info("############Image url : %s" %image_url)
+        current_app.logger.info("Image uploaded. URI: %s" %image_url)
         _url = image_url.split( "/")
         gcfile =  _url[len(_url) - 1]
         gcbucket = _url[len(_url) - 2]
         
-        current_app.logger.debug("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
+        current_app.logger.info("Starting Cloud Vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
         cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket)
+        #TODO: check and remove json.dumps
         cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
         # [START image_url2]
         if image_url:
             data['imageUrl'] = image_url
-            #data['cv_response'] ="cv_response FOOBAR"
         # [END image_url2]
         if cv_response:
             data['cv_response'] = cv_response_pretty
@@ -126,10 +126,4 @@ def delete(id):
     get_model().delete(id)
     return redirect(url_for('.list'))
 
-
-response = {
-            'upload file example': {'task': 'build an API'},
-            'todo2': {'task': '?????'},
-            'todo3': {'task': 'profit!'},
-        }
 
