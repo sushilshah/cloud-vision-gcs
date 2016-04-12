@@ -32,7 +32,8 @@
 </div>
 
 <div class="media">
-  <div class="media-body">
+  <div class="media-body panel panel-default">
+    <div class="panel-body">
     <h4 class="book-title">
       {{book.title}}
       <small>{{book.publishedDate}}</small>
@@ -43,22 +44,22 @@
       <div class="thumbnail">
       {# [START book_image] #}
       {% if book.imageUrl %}
-        <img src="{{book.imageUrl}}" alt="500x500">
+        <img src="{{book.imageUrl}}" alt="500x500" data-holder-rendered="true" data-src="holder.js/500x500/auto">
       {% else %}
         <img class="book-image" src="http://placekitten.com/g/128/192">
       {% endif %}
         <div class="caption">
-          <h3>Thumbnail label</h3>
+          <h3>{{book.birdInfo.birdInfo[0].description|capitalize}}</h3>
         </div>
       </div>
     </div>    
 
-    <div>
-      Description:
+    <div class="well col-sm-8 col-md-6">
       {{book.birdInfo.knowledgeGraphResponse.property['/common/topic/description']['values'][0].value}}
     </div>
+    </div>
   </div>
-
+  
 </div>
 
 {% endblock %}
