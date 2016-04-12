@@ -21,28 +21,34 @@ def start_chirping(data, get_kg=False):
                     #bird found. chirping....
                     ##Search birdName and 
                     search_bird_results = search_bird(_results[attribute])
-                    #bird_mid = get_bird(_results[attribute])
+                    
                     if search_bird_results:
-                        chirping_bird = search_bird_results[0] #As of now pick at index 0
-                        if not 'birdInfo' in chirping_bird:
+                        chirping_bird = search_bird_results[0] #pick at index 0
+                        if not 'birdInfo' in chirping_response:
                         	chirping_response['birdInfo'] = []
                         chirping_response['birdInfo'].append(chirping_bird)
                         chirping_response['knowledgeGraphUri'] = chirping_bird['mid']
                         #knowledge graph search 
                         if get_kg:
                         	kg_response = kgraph.get_from_freebase_knowledge_graph(chirping_bird['mid'])
+                            ##Add to response bird info
                         	chirping_response['knowledgeGraphResponse'] = kg_response
-                    ##Add to response bird info
+                    else:
+                        chirping_response = {"message": "Bird Name not recognised"}
+                        print "#### ELse block in bird chirping"
+                else:
+                    chirping_response = {"message": "No bird recognised"}
+                    
     return chirping_response
 
 
 #expects input format as [{u'score': u'0.98018545', u'mid': u'/m/0h29c', u'description': u'peafowl'}, {u'score': u'0.94620532', u'mid': u'/m/015p6', u'description': u'bird'}]
-bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl', 'parrot']
+bird_name_list = ['hummingbird', 'owl', 'penguin', 'kingfisher', 'peafowl', 'parrot', "house sparrow"]
 def search_bird(input):
     response = []
     i = 0
     for label_annotations in input:
-        if label_annotations['description'] in bird_name_list:
+        if label_annotations['description'].lower() in bird_name_list:
             response.append(label_annotations)
             i=+1
     return response

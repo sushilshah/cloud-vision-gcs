@@ -165,8 +165,14 @@ def validate_label_annotations(input):
     return False
 
 
-import chirping
-chirping.start_chirping(jsonData)
+# import chirping
+# chirping.start_chirping(jsonData)
+
+foo = []
+if foo:
+    print "foo"
+else:
+    print "no foo"
 
 #getTargetIds(jsonData)
 

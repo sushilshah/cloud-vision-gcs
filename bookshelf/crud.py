@@ -75,16 +75,15 @@ def add():
 
         # If an image was uploaded, update the data to point to the new image.
         # [START image_url]
- #       image_url = upload_image_file(request.files.get('image'))
+        image_url = upload_image_file(request.files.get('image'))
         # [END image_url]
-        image_url = "https://storage.googleapis.com/cloud-vision/demo-peacock-2016-04-11-090850.jpg"
+        
         current_app.logger.info("############Image url : %s" %image_url)
         _url = image_url.split( "/")
         gcfile =  _url[len(_url) - 1]
         gcbucket = _url[len(_url) - 2]
         
-        
-        current_app.logger.info("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
+        current_app.logger.debug("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
         cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket)
         cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
         # [START image_url2]
