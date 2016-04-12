@@ -8,6 +8,7 @@ input_json = {}
 def start_chirping(data, get_kg=False):
     chirping_response = {}
     if 'responses' in data:
+
         _results = data["responses"][0]
         for attribute in _results:
             if attribute == 'safeSearchAnnotation':

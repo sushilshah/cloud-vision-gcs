@@ -57,7 +57,14 @@ def list():
 @crud.route('/<id>')
 def view(id):
     book = get_model().read(id)
+    cv_response = json.loads(book['cv_response'])
+
+    if cv_response:
+        attrib_info = cloud_vision.get_attributes_info(cv_response, "BIRD", True)
+        book['birdInfo'] = attrib_info
+
     _book = dict(book)
+    
     return render_template("view.html", book=_book)
 
 
@@ -68,10 +75,10 @@ def add():
 
         # If an image was uploaded, update the data to point to the new image.
         # [START image_url]
-        image_url = upload_image_file(request.files.get('image'))
+ #       image_url = upload_image_file(request.files.get('image'))
         # [END image_url]
+        image_url = "https://storage.googleapis.com/cloud-vision/demo-peacock-2016-04-11-090850.jpg"
         current_app.logger.info("############Image url : %s" %image_url)
-
         _url = image_url.split( "/")
         gcfile =  _url[len(_url) - 1]
         gcbucket = _url[len(_url) - 2]
@@ -79,7 +86,6 @@ def add():
         
         current_app.logger.info("############starting cloud vision gcfile : {} : gcbucket : {}".format(gcfile, gcbucket))
         cv_response = cloud_vision.identify_image_attributes_gcs(gcfile, gcbucket)
-        current_app.logger.info("############end cloud vision gcfile :   %s: " %cv_response )
         cv_response_pretty = json.dumps(cv_response, indent=4, sort_keys=True)
         # [START image_url2]
         if image_url:
@@ -87,21 +93,9 @@ def add():
             #data['cv_response'] ="cv_response FOOBAR"
         # [END image_url2]
         if cv_response:
-            data['cv_response'] = str(cv_response_pretty)
+            data['cv_response'] = cv_response_pretty
 
         book = get_model().create(data)
-        
-        #_book = dict(book)
-
-        #current_app.logger.info("############BOOK OBJECT TYPE : " +  str(_book))
-        #_book['cv_response'] ="cv_response FOOBAR"
-        
-        # if cv_response:
-        #     book['cv_response'] = cv_response
-        # book['cv_response1'] = "cv_response FOOBAR"
-        #current_app.logger.info("############BOOK OBJECT :   %s: " %_book )
-
-        #return redirect(url_for('.view', id=book['id']))
 
         return redirect(url_for('.view', id=book['id']))
         
